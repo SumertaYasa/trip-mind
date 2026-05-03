@@ -1,0 +1,13 @@
+{
+  "name": "trip-mind",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "backend": "cd backend && .\\trip-mind\\Scripts\\uvicorn app.main:app --reload",
+    "frontend": "cd frontend && npx expo start --lan"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

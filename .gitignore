@@ -1,0 +1,35 @@
+# --- GLOBAL (Berlaku untuk Frontend & Backend) ---
+node_modules/
+.vscode/
+.env
+.env*.local
+.DS_Store
+*.log
+*.pem
+
+# --- FRONTEND (Expo/Native) ---
+# Kita tetap pakai prefix /frontend/ agar spesifik ke folder tersebut
+/frontend/.expo/
+/frontend/dist/
+/frontend/web-build/
+/frontend/expo-env.d.ts
+/frontend/.kotlin/
+/frontend/.metro-health-check*
+
+# Native Artifacts & Credentials
+/frontend/ios/
+/frontend/android/
+/frontend/*.jks
+/frontend/*.p8
+/frontend/*.p12
+/frontend/*.key
+/frontend/*.mobileprovision
+
+# Typescript & Examples
+/frontend/*.tsbuildinfo
+/frontend/app-example/
+
+# --- BACKEND ---
+/backend/trip-mind/
+**/__pycache__/
+*.pyc
