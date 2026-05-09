@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import {
-  View, Text, ScrollView, TouchableOpacity, TextInput,
+  View, Text, ScrollView, TouchableOpacity, TextInput, Image,
   StyleSheet, Dimensions, NativeSyntheticEvent, NativeScrollEvent,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -61,12 +61,26 @@ export default function HomeScreen() {
 
         {/* ── Header ────────────────────────────────────────────────────── */}
         <View style={s.header}>
-          <View style={s.headerLeft}>
+          {/* Kiri: map icon */}
+          <View style={s.headerSide}>
             <Ionicons name="map-outline" size={26} color={C.primary} />
-            <Text style={s.brandTxt}>TripMind</Text>
           </View>
-          <TouchableOpacity style={s.bellBtn}>
-            <Ionicons name="notifications-outline" size={22} color={C.textSecondary} />
+
+          {/* Tengah: TripMind + logo */}
+          <View style={s.headerCenter}>
+            <Text style={s.brandTxt}>TripMind</Text>
+            <Image
+              source={require('../../assets/images/logo.png')}
+              style={s.headerLogo}
+              resizeMode="contain"
+            />
+          </View>
+
+          {/* Kanan: avatar bulat */}
+          <TouchableOpacity style={s.headerSide}>
+            <View style={s.avatarCircle}>
+              <Ionicons name="person" size={20} color="#fff" />
+            </View>
           </TouchableOpacity>
         </View>
 
@@ -145,13 +159,15 @@ export default function HomeScreen() {
 // ─── Styles ──────────────────────────────────────────────────────────────────
 const s = StyleSheet.create({
   root:         { flex: 1, backgroundColor: '#F9FAFB' },
-  content:      { paddingHorizontal: H_PAD, paddingBottom: 32 },
+  content:      { paddingHorizontal: H_PAD, paddingBottom: 110 },
 
   // Header
-  header:       { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 16 },
-  headerLeft:   { flexDirection: 'row', alignItems: 'center', gap: 8 },
-  brandTxt:     { fontSize: 22, fontWeight: '800', color: C.primary, letterSpacing: -0.5 },
-  bellBtn:      { width: 40, height: 40, borderRadius: 12, backgroundColor: C.white, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: C.border },
+  header:       { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 14, paddingHorizontal: 4, backgroundColor: '#F9FAFB', borderBottomWidth: 1, borderBottomColor: '#E2E8F0', position: 'relative' },
+  headerSide:   { width: 44, alignItems: 'center', justifyContent: 'center' },
+  headerCenter: { position: 'absolute', left: 0, right: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 0, pointerEvents: 'none' },
+  headerLogo:   { width: 60, height: 60, tintColor: C.primary },
+  brandTxt:     { fontSize: 20, fontWeight: '800', color: C.primary, letterSpacing: -0.3 },
+  avatarCircle: { width: 36, height: 36, borderRadius: 18, backgroundColor: C.primary, alignItems: 'center', justifyContent: 'center', overflow: 'hidden' },
 
   // Search
   searchBar:    { flexDirection: 'row', alignItems: 'center', backgroundColor: C.white, borderRadius: 14, paddingHorizontal: 14, paddingVertical: 12, borderWidth: 1, borderColor: C.border, marginBottom: 18, gap: 10 },
