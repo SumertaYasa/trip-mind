@@ -94,24 +94,24 @@ export default function VerificationModal({
 }
 
 const s = StyleSheet.create({
-  overlay:    { flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 24, backgroundColor: C.overlay },
-  kav:        { width: '100%' },
-  card:       { backgroundColor: C.white, borderRadius: 32, padding: 24, alignItems: 'center', width: '100%' },
+  overlay: { flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 24, backgroundColor: C.overlay },
+  kav: { width: '100%' },
+  card: { backgroundColor: C.white, borderRadius: 32, padding: 24, alignItems: 'center', width: '100%' },
 
-  closeBtn:   { position: 'absolute', right: 24, top: 24, width: 32, height: 32, borderRadius: 16, backgroundColor: '#F3F4F6', alignItems: 'center', justifyContent: 'center', zIndex: 10 },
-  iconWrap:   { width: 64, height: 64, borderRadius: 20, backgroundColor: C.primaryLight, alignItems: 'center', justifyContent: 'center', marginTop: 16, marginBottom: 24 },
+  closeBtn: { position: 'absolute', right: 24, top: 24, width: 32, height: 32, borderRadius: 16, backgroundColor: '#F3F4F6', alignItems: 'center', justifyContent: 'center', zIndex: 10 },
+  iconWrap: { width: 64, height: 64, borderRadius: 20, backgroundColor: C.primaryLight, alignItems: 'center', justifyContent: 'center', marginTop: 16, marginBottom: 24 },
 
-  title:      { fontSize: 20, fontWeight: '700', color: C.textPrimary, marginBottom: 8 },
-  subtitle:   { fontSize: 14, color: C.textMuted, textAlign: 'center', lineHeight: 20, paddingHorizontal: 16, marginBottom: 32 },
-  emailTxt:   { fontWeight: '700', color: C.textSecondary },
+  title: { fontSize: 20, fontWeight: '700', color: C.textPrimary, marginBottom: 8 },
+  subtitle: { fontSize: 14, color: C.textMuted, textAlign: 'center', lineHeight: 20, paddingHorizontal: 16, marginBottom: 32 },
+  emailTxt: { fontWeight: '700', color: C.textSecondary },
 
-  otpRow:     { flexDirection: 'row', justifyContent: 'center', gap: 12, width: '100%', marginBottom: 32 },
-  otpInput:   { width: 56, height: 64, backgroundColor: C.white, borderWidth: 1.5, borderColor: C.border, borderRadius: 16, textAlign: 'center', fontSize: 24, fontWeight: '700', color: C.textPrimary },
+  otpRow: { flexDirection: 'row', justifyContent: 'center', gap: 12, width: '100%', marginBottom: 32 },
+  otpInput: { width: 56, height: 64, backgroundColor: C.white, borderWidth: 1.5, borderColor: C.border, borderRadius: 16, textAlign: 'center', fontSize: 24, fontWeight: '700', color: C.textPrimary },
 
-  verifyBtn:  { width: '100%', backgroundColor: C.primary, paddingVertical: 16, borderRadius: 16, alignItems: 'center', marginBottom: 24 },
-  verifyTxt:  { color: C.white, fontWeight: '700', fontSize: 16 },
+  verifyBtn: { width: '100%', backgroundColor: C.primary, paddingVertical: 16, borderRadius: 16, alignItems: 'center', marginBottom: 24 },
+  verifyTxt: { color: C.white, fontWeight: '700', fontSize: 16 },
 
-  resendRow:  { flexDirection: 'row', alignItems: 'center', marginBottom: 8 },
-  resendLabel:{ fontSize: 14, color: C.textMuted },
+  resendRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 8 },
+  resendLabel: { fontSize: 14, color: C.textMuted },
   resendLink: { fontSize: 14, color: C.primary, fontWeight: '700' },
 });
