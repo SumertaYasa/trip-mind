@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import { View, Animated, StyleSheet, Easing } from 'react-native';
+import { View, Animated, Easing } from 'react-native';
 import { router } from 'expo-router';
-import { Palette as C } from '@/constants/palette';
 
 const LOADING_DURATION = 2500; // ms
 
@@ -54,14 +53,14 @@ export default function LoadingScreen() {
   }, []);
 
   return (
-    <View style={s.container}>
+    <View className="flex-1 bg-[#1A6B5A] items-center justify-center">
       {/* Layer 1: fade-in + scale-in */}
       <Animated.View style={{ opacity, transform: [{ scale }] }}>
-        {/* Layer 2: pulse — nested view terpisah agar tidak perlu Animated.multiply */}
+        {/* Layer 2: pulse */}
         <Animated.View style={{ transform: [{ scale: pulse }] }}>
           <Animated.Image
             source={require('../../assets/images/logo.png')}
-            style={s.logo}
+            style={{ width: 160, height: 160 }}
             resizeMode="contain"
           />
         </Animated.View>
@@ -69,16 +68,3 @@ export default function LoadingScreen() {
     </View>
   );
 }
-
-const s = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: C.primary,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  logo: {
-    width: 160,
-    height: 160,
-  },
-});

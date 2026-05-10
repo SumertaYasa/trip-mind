@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, Image, Platform } from 'react-native';
+import { View, Text, ScrollView, TextInput, TouchableOpacity, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Palette as C } from '@/constants/palette';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 
@@ -24,36 +23,37 @@ export default function MyPlansScreen() {
   const [searchQuery, setSearchQuery] = useState('');
 
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton} onPress={() => {
-          if (router.canGoBack()) router.back();
-        }}>
-          <Feather name="chevron-left" size={24} color={C.textPrimary} />
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#F8FAFC' }} edges={['top']}>
+      <View className="flex-row items-center justify-between px-4 py-3">
+        <TouchableOpacity
+          className="w-10 h-10 items-center justify-center rounded-full bg-white shadow-sm"
+          onPress={() => { if (router.canGoBack()) router.back(); }}
+        >
+          <Feather name="chevron-left" size={24} color="#0F172A" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>My Plans</Text>
+        <Text className="text-xl font-bold text-slate-900">My Plans</Text>
         <View style={{ width: 40 }} />
       </View>
 
-      <View style={styles.searchContainer}>
-        <Feather name="search" size={20} color={C.textMuted} style={styles.searchIcon} />
+      <View className="flex-row items-center bg-white mx-4 my-3 rounded-2xl px-4 h-[52px] shadow-sm">
+        <Feather name="search" size={20} color="#94A3B8" style={{ marginRight: 12 }} />
         <TextInput
-          style={styles.searchInput}
+          style={{ flex: 1, fontSize: 16, color: '#0F172A' }}
           placeholder="Your next destination..."
-          placeholderTextColor={C.textMuted}
+          placeholderTextColor="#94A3B8"
           value={searchQuery}
           onChangeText={setSearchQuery}
         />
       </View>
 
-      <View style={styles.actionRow}>
-        <TouchableOpacity style={styles.actionButton}>
-          <Feather name="filter" size={16} color={C.textSecondary} />
-          <Text style={styles.actionButtonText}>Filters</Text>
+      <View className="flex-row px-4 gap-3 mb-4">
+        <TouchableOpacity className="flex-1 flex-row items-center justify-center bg-white py-3 rounded-xl gap-2 border border-slate-200">
+          <Feather name="filter" size={16} color="#64748B" />
+          <Text className="text-[15px] font-semibold text-slate-500">Filters</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.actionButton}>
-          <Feather name="git-commit" size={16} color={C.textSecondary} style={{ transform: [{ rotate: '90deg' }] }} />
-          <Text style={styles.actionButtonText}>Sort</Text>
+        <TouchableOpacity className="flex-1 flex-row items-center justify-center bg-white py-3 rounded-xl gap-2 border border-slate-200">
+          <Feather name="git-commit" size={16} color="#64748B" style={{ transform: [{ rotate: '90deg' }] }} />
+          <Text className="text-[15px] font-semibold text-slate-500">Sort</Text>
         </TouchableOpacity>
       </View>
 
@@ -69,22 +69,22 @@ export default function MyPlansScreen() {
       </View>
 
       <ScrollView
-        contentContainerStyle={styles.listContent}
+        contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 100, gap: 20 }}
         showsVerticalScrollIndicator={false}
       >
         {MOCK_PLANS.map((plan) => (
           <TouchableOpacity
             key={plan.id}
-            style={styles.card}
+            className="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-100"
             activeOpacity={0.8}
             onPress={() => router.push(`/plan/${plan.id}`)}
           >
-            <Image source={{ uri: plan.image }} style={styles.cardImage} />
-            <View style={styles.cardContent}>
-              <Text style={styles.cardTitle}>{plan.title}</Text>
-              <View style={styles.dateRow}>
-                <Feather name="calendar" size={14} color={C.textMuted} />
-                <Text style={styles.dateText}>{plan.date}</Text>
+            <Image source={{ uri: plan.image }} className="w-full h-[180px]" />
+            <View className="p-4">
+              <Text className="text-lg font-bold text-slate-900 mb-1">{plan.title}</Text>
+              <View className="flex-row items-center gap-1.5">
+                <Feather name="calendar" size={14} color="#94A3B8" />
+                <Text className="text-sm font-medium text-slate-500">{plan.date}</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -93,116 +93,3 @@ export default function MyPlansScreen() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F8FAFC', 
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-  },
-  backButton: {
-    width: 40,
-    height: 40,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 20,
-    backgroundColor: C.white,
-    ...Platform.select({
-      ios: { shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.05, shadowRadius: 8 },
-      android: { elevation: 2 },
-    }),
-  },
-  headerTitle: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: C.textPrimary,
-  },
-  searchContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: C.white,
-    marginHorizontal: 16,
-    marginVertical: 12,
-    borderRadius: 16,
-    paddingHorizontal: 16,
-    height: 52,
-    ...Platform.select({
-      ios: { shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.06, shadowRadius: 12 },
-      android: { elevation: 3 },
-    }),
-  },
-  searchIcon: {
-    marginRight: 12,
-  },
-  searchInput: {
-    flex: 1,
-    fontSize: 16,
-    color: C.textPrimary,
-  },
-  actionRow: {
-    flexDirection: 'row',
-    paddingHorizontal: 16,
-    gap: 12,
-    marginBottom: 16,
-  },
-  actionButton: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: C.white,
-    paddingVertical: 12,
-    borderRadius: 12,
-    gap: 8,
-    borderWidth: 1,
-    borderColor: C.border,
-  },
-  actionButtonText: {
-    fontSize: 15,
-    fontWeight: '600',
-    color: C.textSecondary,
-  },
-  listContent: {
-    paddingHorizontal: 16,
-    paddingBottom: 100, 
-    gap: 20,
-  },
-  card: {
-    backgroundColor: C.white,
-    borderRadius: 20,
-    overflow: 'hidden',
-    ...Platform.select({
-      ios: { shadowColor: '#000', shadowOffset: { width: 0, height: 6 }, shadowOpacity: 0.08, shadowRadius: 16 },
-      android: { elevation: 4 },
-    }),
-  },
-  cardImage: {
-    width: '100%',
-    height: 180,
-  },
-  cardContent: {
-    padding: 16,
-  },
-  cardTitle: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: C.textPrimary,
-    marginBottom: 6,
-  },
-  dateRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-  },
-  dateText: {
-    fontSize: 14,
-    color: C.textMuted,
-    fontWeight: '500',
-  },
-});

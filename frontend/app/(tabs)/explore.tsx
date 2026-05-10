@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, Dimensions, TouchableOpacity, Platform, StyleSheet } from 'react-native';
+import { View, Text, Dimensions, TouchableOpacity, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import { Gesture, GestureDetector, ScrollView, GestureHandlerRootView } from 'react-native-gesture-handler';
-import Animated, { 
-  useSharedValue, 
-  useAnimatedStyle, 
-  withSpring, 
-  withTiming, 
-  runOnJS, 
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+  withTiming,
+  runOnJS,
   interpolate,
   Extrapolation
 } from 'react-native-reanimated';
@@ -118,22 +118,29 @@ export default function ExploreScreen() {
     };
   });
 
-  // Animated overlays for Swipe Indication 
+  // Animated overlays for Swipe Indication
   const rightOverlayStyle = useAnimatedStyle(() => ({
     opacity: interpolate(translateX.value, [0, SCREEN_WIDTH / 3], [0, 0.4], Extrapolation.CLAMP),
-    backgroundColor: '#10B981', 
+    backgroundColor: '#10B981',
   }));
-  
+
   const leftOverlayStyle = useAnimatedStyle(() => ({
     opacity: interpolate(translateX.value, [0, -SCREEN_WIDTH / 3], [0, 0.4], Extrapolation.CLAMP),
-    backgroundColor: '#EF4444', 
+    backgroundColor: '#EF4444',
   }));
+
+  // Card wrapper style — Animated.View must use style prop
+  const cardWrapperStyle = { position: 'absolute' as const, top: 0, left: 16, right: 16, bottom: 20 };
+  const absoluteFill = { position: 'absolute' as const, top: 0, left: 0, right: 0, bottom: 0 };
 
   const renderCard = (place: typeof MOCK_PLACES[0], isTop: boolean) => {
     if (!place) return null;
 
     const content = (
-      <View className="flex-1 bg-white rounded-3xl overflow-hidden shadow-xl" style={styles.cardBorder}>
+      <View
+        className="flex-1 bg-white rounded-3xl overflow-hidden shadow-xl"
+        style={Platform.OS === 'android' ? { elevation: 8 } : undefined}
+      >
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 128 }}>
           {/* Header Image & Info */}
           <View className="w-full h-96 relative">
@@ -197,12 +204,12 @@ export default function ExploreScreen() {
             </View>
           </View>
         </ScrollView>
-        
-        {/* Color Overlays during Swipe */}
+
+        {/* Color Overlays during Swipe — Animated.View must use style */}
         {isTop && (
           <>
-            <Animated.View style={[StyleSheet.absoluteFill, rightOverlayStyle]} pointerEvents="none" />
-            <Animated.View style={[StyleSheet.absoluteFill, leftOverlayStyle]} pointerEvents="none" />
+            <Animated.View style={[absoluteFill, rightOverlayStyle]} pointerEvents="none" />
+            <Animated.View style={[absoluteFill, leftOverlayStyle]} pointerEvents="none" />
           </>
         )}
       </View>
@@ -211,7 +218,7 @@ export default function ExploreScreen() {
     if (isTop) {
       return (
         <GestureDetector gesture={panGesture}>
-          <Animated.View style={[styles.cardWrapper, topCardStyle, { zIndex: 10 }]}>
+          <Animated.View style={[cardWrapperStyle, topCardStyle, { zIndex: 10 }]}>
             {content}
           </Animated.View>
         </GestureDetector>
@@ -219,7 +226,7 @@ export default function ExploreScreen() {
     }
 
     return (
-      <Animated.View style={[styles.cardWrapper, nextCardStyle, { zIndex: 1 }]}>
+      <Animated.View style={[cardWrapperStyle, nextCardStyle, { zIndex: 1 }]}>
         {content}
       </Animated.View>
     );
@@ -244,13 +251,13 @@ export default function ExploreScreen() {
         {/* Segmented Control */}
         <View className="items-center mb-4">
           <View className="flex-row bg-white rounded-full p-1 border border-slate-200 w-52">
-            <TouchableOpacity 
+            <TouchableOpacity
               className={`flex-1 py-2 items-center rounded-full ${activeSegment === 'wisata' ? 'bg-emerald-700' : ''}`}
               onPress={() => setActiveSegment('wisata')}
             >
               <Text className={`text-sm font-semibold ${activeSegment === 'wisata' ? 'text-white' : 'text-slate-500'}`}>Wisata</Text>
             </TouchableOpacity>
-            <TouchableOpacity 
+            <TouchableOpacity
               className={`flex-1 py-2 items-center rounded-full ${activeSegment === 'kuliner' ? 'bg-emerald-700' : ''}`}
               onPress={() => setActiveSegment('kuliner')}
             >
@@ -281,19 +288,19 @@ export default function ExploreScreen() {
         {/* Floating Action Buttons */}
         {!isFinished && (
           <View className="absolute bottom-10 left-0 right-0 flex-row justify-center items-center gap-6 z-50">
-            <TouchableOpacity 
-              className="w-14 h-14 rounded-full bg-white justify-center items-center shadow-lg border border-slate-100" 
+            <TouchableOpacity
+              className="w-14 h-14 rounded-full bg-white justify-center items-center shadow-lg border border-slate-100"
               onPress={() => forceSwipe('left')}
             >
               <Feather name="x" size={24} color="#EF4444" />
             </TouchableOpacity>
-            
+
             <TouchableOpacity className="w-16 h-16 rounded-full bg-emerald-700 justify-center items-center shadow-xl border-4 border-slate-50">
               <Feather name="bookmark" size={24} color="#FFFFFF" />
             </TouchableOpacity>
-            
-            <TouchableOpacity 
-              className="w-14 h-14 rounded-full bg-white justify-center items-center shadow-lg border border-slate-100" 
+
+            <TouchableOpacity
+              className="w-14 h-14 rounded-full bg-white justify-center items-center shadow-lg border border-slate-100"
               onPress={() => forceSwipe('right')}
             >
               <Ionicons name="heart" size={26} color="#10B981" />
@@ -304,21 +311,3 @@ export default function ExploreScreen() {
     </GestureHandlerRootView>
   );
 }
-
-// Keeping some styles that are tricky in standard nativewind classes, like specific positioning for stacked cards
-const styles = StyleSheet.create({
-  cardWrapper: {
-    position: 'absolute',
-    top: 0,
-    left: 16,
-    right: 16,
-    bottom: 20,
-  },
-  cardBorder: {
-    ...Platform.select({
-      android: {
-        elevation: 8,
-      }
-    })
-  }
-});
